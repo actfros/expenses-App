@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transactions> transactions;
-  TransactionList(this.transactions, {super.key});
+  final void Function(String) onRemove;
+
+  TransactionList(this.transactions, this.onRemove);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 550,
       child: transactions.isEmpty
           ? Column(
               children: [
@@ -60,6 +62,12 @@ class TransactionList extends StatelessWidget {
                     subtitle: (Text(
                       DateFormat('d MMM y').format(tr.date),
                     )),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).colorScheme.error,
+                      onPressed: () => onRemove(tr.id),
+
+                    ),
                   ),
                 );
               },
