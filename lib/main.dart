@@ -27,6 +27,10 @@ class ExpensesApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
+          labelLarge: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
@@ -65,6 +69,18 @@ class _MyHomePageState extends State<MyHomePage> {
       value: 211.30,
       date: DateTime.now().subtract(Duration(days: 4)),
     ),
+    Transactions(
+      id: 't3',
+      title: 'Carro',
+      value: 110250.30,
+      date: DateTime.now(),
+    ),
+    Transactions(
+      id: 't2',
+      title: 'Lanche',
+      value: 60.30,
+      date: DateTime.now(),
+    ),
   ];
 
   List<Transactions> get _recentTransactions {
@@ -92,10 +108,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _createTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return TransactionForm(_addTransaction);
-        });
+      context: context,
+      builder: (_) {
+        return TransactionForm(_addTransaction);
+      },
+    );
   }
 
   @override
