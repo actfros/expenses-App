@@ -50,38 +50,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transactions> _transactions = [
-    Transactions(
-      id: 't0',
-      title: 'Conta Antiga',
-      value: 250.30,
-      date: DateTime.now().subtract(Duration(days: 30)),
-    ),
-    Transactions(
-      id: 't1',
-      title: 'Conta Energia',
-      value: 250.30,
-      date: DateTime.now().subtract(Duration(days: 3)),
-    ),
-    Transactions(
-      id: 't2',
-      title: 'Internet',
-      value: 211.30,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-    Transactions(
-      id: 't3',
-      title: 'Carro',
-      value: 110250.30,
-      date: DateTime.now(),
-    ),
-    Transactions(
-      id: 't2',
-      title: 'Lanche',
-      value: 60.30,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transactions> _transactions = [];
 
   List<Transactions> get _recentTransactions {
     return _transactions.where((tr) {
@@ -91,12 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transactions(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
@@ -104,6 +73,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     Navigator.of(context).pop();
+  }
+
+  _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == id);
+    });
   }
 
   _createTransactionFormModal(BuildContext context) {
@@ -132,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _removeTransaction),
           ],
         ),
       ),
