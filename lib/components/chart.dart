@@ -8,7 +8,7 @@ class Chart extends StatelessWidget {
   
   const Chart(this.recentTransactions, {super.key});
 
-  List<Map<String, Object>> get groupedTransactions {
+  List<Map<String, dynamic>> get groupedTransactions {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
@@ -24,16 +24,21 @@ class Chart extends StatelessWidget {
           if(sameDay && sameMonth && sameYear){
             totalSum += recentTransactions[i].value;
           }
-      }
-
-      
+      }      
 
       return {
         'day': DateFormat.E().format(weekDay)[0],
         'value': totalSum,
       };
-    });
+    }).reversed.toList();
   }
+double get _weekTotalValue{
+  return groupedTransactions.fold(0.0, (sum, tr){
+    return sum + tr['value'];
+  });
+
+ 
+}
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +46,21 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: groupedTransactions.map((tr){
-          return ChartBar(
-            label: tr['day'] as String, 
-            value: tr['value'] as double,
-            percentage: 0,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactions.map((tr){
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                label: tr['day'] as String, 
+                value: tr['value'] as double,
+                percentage: (tr['value'] as double) / _weekTotalValue,
+                ),
             );
-        }).toList(),
+          }).toList(),
+        ),
       ),
     );
   }
