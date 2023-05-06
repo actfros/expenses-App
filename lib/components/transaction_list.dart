@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import '../models/transactions.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,7 @@ class TransactionList extends StatelessWidget {
   final List<Transactions> transactions;
   final void Function(String) onRemove;
 
-  TransactionList(this.transactions, this.onRemove);
+  const TransactionList(this.transactions, this.onRemove, {super.key});
 
   @override
   Widget build(BuildContext context) {

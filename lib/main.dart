@@ -8,6 +8,8 @@ import 'models/transactions.dart';
 main() => runApp(ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
+  const ExpensesApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     final ThemeData tema = ThemeData();
@@ -45,6 +47,8 @@ class ExpensesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -142,12 +146,12 @@ class _MyHomePageState extends State<MyHomePage> {
             //   ],
             // ),
            if(_showChart || !isLandscape)
-            Container(
+            SizedBox(
               height: availableHeight * (isLandscape ? 0.7 : 0.3),
               child: Chart(_recentTransactions),
             ),
             if(!_showChart || !isLandscape)
-            Container(
+            SizedBox(
               height: availableHeight * (isLandscape ? 1 : 0.7),
               child: TransactionList(_transactions, _removeTransaction),
             ),
